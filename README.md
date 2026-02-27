@@ -1,136 +1,116 @@
-# DeepSeer Frontend + Backend
+﻿# DEEPSEER
 
-Production-oriented AI-assisted prediction market stack using Next.js App Router, TypeScript, Tailwind, Ethers, WebSocket live updates, and contract-backed data flows.
+Production-grade decentralized AI-assisted prediction market system.
 
-## Stack
-- Next.js 15 App Router
-- TypeScript strict mode
-- TailwindCSS + Framer Motion
-- Zustand state management
-- Ethers.js contract integration
-- `lightweight-charts` candlestick charts
-- D3 liquidity depth chart
-- Express + WS backend for live event fan-out and risk model API
+## What Is Included
 
-## App Routes
+- Existing Next.js app layout under `src/` with upgraded DEEPSEER trade terminal UI at `src/app/trade/page.tsx`.
+- Legacy protocol contracts under `contracts/deepseer/` (kept intact).
+- New production contract suite under `contracts/src/`:
+  - `PredictionMarketFactory.sol`
+  - `PredictionMarket.sol`
+  - `SettlementEngine.sol`
+  - `Treasury.sol`
+  - `interfaces/RiskOracleInterface.sol`
+- CRE workflow under `cre-workflows/deepseer-settlement/`.
+- Deterministic FastAPI risk microservice under `backend-ai/`.
+- Security, architecture, deployment, and demo runbooks under `docs/`.
 
-Primary tabs and sub-tabs implemented:
+REAL mode is the default system path. Demo mode is explicitly labeled in the trade UI.
 
-- `markets`
-  - `/markets`
-  - `/markets/resolving`
-  - `/markets/resolved`
-  - `/markets/high-volatility`
-  - `/markets/high-confidence`
-- `trade`
-  - `/trade`
-  - `/trade/limit-orders`
-  - `/trade/liquidity`
-  - `/trade/order-history`
-- `portfolio`
-  - `/portfolio`
-  - `/portfolio/pnl`
-  - `/portfolio/exposure`
-  - `/portfolio/metrics`
-- `analytics`
-  - `/analytics`
-  - `/analytics/liquidity-depth`
-  - `/analytics/volatility`
-  - `/analytics/fees`
-  - `/analytics/oracle-performance`
-- `ai-risk`
-  - `/ai-risk`
-  - `/ai-risk/source-agreement`
-  - `/ai-risk/temporal-consistency`
-  - `/ai-risk/anomaly-flags`
-  - `/ai-risk/provenance`
-- `governance`
-  - `/governance`
-  - `/governance/voting-power`
-  - `/governance/locked-tokens`
-  - `/governance/history`
-- `create-market`
-  - `/create-market`
-  - `/create-market/scalar`
-  - `/create-market/categorical`
-  - `/create-market/conditional`
-- `learn`
-  - `/learn`
-  - `/learn/amm`
-  - `/learn/settlement`
-  - `/learn/ai-risk`
-  - `/learn/charts`
+## Repository Structure
 
-## Live Data Sources
-
-No synthetic frontend values are used. Data is read from:
-- PredictionMarket / AMM / SettlementEngine / Governance contracts
-- Backend AI risk API (`/api/risk*`)
-- Backend analytics API (`/api/analytics*`)
-- Backend WebSocket stream
-
-WebSocket event types:
-- `TradeExecuted`
-- `LiquidityAdded`
-- `LiquidityRemoved`
-- `MarketResolved`
-- `OracleUpdated`
-- `AIConfidenceUpdated`
-
-## Environment Variables
-
-Create `.env.local` with:
-
-```bash
-NEXT_PUBLIC_RPC_URL=
-NEXT_PUBLIC_WS_RPC_URL=
-NEXT_PUBLIC_CHAIN_ID=
-
-NEXT_PUBLIC_PREDICTION_MARKET_ADDRESS=
-NEXT_PUBLIC_AMM_ADDRESS=
-NEXT_PUBLIC_SETTLEMENT_ENGINE_ADDRESS=
-NEXT_PUBLIC_GOVERNANCE_ADDRESS=
-NEXT_PUBLIC_TOKEN_ADDRESS=
-
-NEXT_PUBLIC_API_URL=http://127.0.0.1:4000
-NEXT_PUBLIC_WS_API_URL=ws://127.0.0.1:4000
-NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=
+```text
+/src                Existing frontend app (App Router pages/components)
+/backend            Existing API + websocket bridge
+/contracts/deepseer Legacy contracts (preserved)
+/contracts/src      Production contract suite (new)
+/contracts/script   Production deployment script (new)
+/backend-ai         FastAPI deterministic risk service (new)
+/cre-workflows      Chainlink CRE workflow project (new)
+/deploy             Address templates and deployment runbook (new)
+/docs               Architecture/security/demo/public checklist (new)
+/tests              E2E scenario matrix (new)
+/scripts            Bootstrap/deploy/sim helpers (new + existing)
 ```
 
-## Development
+## Chainlink Stack
 
-Install:
+- Data Feeds: lock/final price snapshots in market resolution logic.
+- Automation: lock-round/open-resolution upkeep logic in `SettlementEngine`.
+- Functions: independent risk request tracking and merge gate.
+- CRE: event trigger -> external fetch -> AI risk score -> signed on-chain report.
+
+References: `docs/chainlink-references.md`
+
+## Frontend Terminal
+
+`src/app/trade/page.tsx` now includes:
+
+- Round-based top timeline with active neon indicator
+- Left vertical bull/bear strength axis
+- Realtime chart panel
+- Wallet area
+- Bet panel with quick amounts + custom input
+- Balance, P/L, total winnings, total staked, win rate cards
+- Bets history table
+
+Theme: blue/violet neon, dark-only, glassmorphism-style panels.
+
+## Backend AI Service
+
+`backend-ai` exposes deterministic risk scoring:
+
+- `POST /v1/risk-score`
+- Output fields:
+  - `confidence_score`
+  - `anomaly_flag`
+  - `source_consensus`
+  - `evidence_hash`
+
+## Quick Run
+
+1. Install JavaScript dependencies:
 
 ```bash
 npm install
 ```
 
-Run backend:
+2. Create `.env` from `.env.example` and fill required RPC + contract values:
 
-```bash
-npm run backend
+```powershell
+Copy-Item .env.example .env
 ```
 
-Run frontend:
+3. Run frontend (Next.js):
 
 ```bash
 npm run dev
 ```
 
-Open:
-- Frontend: `http://localhost:3000`
-- Backend: `http://127.0.0.1:4000/health`
-
-## Build
+4. Run backend API/WebSocket bridge (default port `4000`, change if needed):
 
 ```bash
-npm run lint
-npm run build
+npm run backend
 ```
 
-If Next.js reports lockfile SWC patch warnings, refresh dependencies:
+5. Run AI risk service:
 
 ```bash
-rm -rf node_modules package-lock.json
-npm install
+python -m pip install -r backend-ai/requirements.txt
+python -m uvicorn backend-ai.app.main:app --host 127.0.0.1 --port 8011
 ```
+
+## Deployment And Simulation
+
+- Deployment guide: `docs/deployment-guide.md`
+- CRE simulation: `docs/chainlink-references.md`
+- Full architecture and sequence: `docs/architecture.md`
+- Threat model: `docs/security-checklist.md`
+- Demo outline (3-5 min): `docs/demo-script.md`
+
+## Important Notes
+
+- No mock oracle settlement path is used in REAL mode.
+- No admin outcome override path exists in the production contract suite.
+- Functions outage path fails safe by forcing anomaly/cancellation behavior.
