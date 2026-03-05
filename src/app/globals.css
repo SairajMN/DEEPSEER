@@ -125,3 +125,89 @@
 nextjs-portal {
   display: none !important;
 }
+
+:root {
+  --deepseer-bg-0: #070b17;
+  --deepseer-bg-1: #0b1020;
+  --deepseer-bg-2: #0f172a;
+  --deepseer-blue: #2563eb;
+  --deepseer-sky: #3b82f6;
+  --deepseer-violet: #6d28d9;
+  --deepseer-iris: #7c3aed;
+}
+
+.deepseer-terminal {
+  min-height: calc(100vh - 130px);
+  background:
+    radial-gradient(circle at 12% 12%, rgba(37, 99, 235, 0.22), transparent 32%),
+    radial-gradient(circle at 88% 14%, rgba(124, 58, 237, 0.2), transparent 34%),
+    linear-gradient(130deg, var(--deepseer-bg-0), var(--deepseer-bg-1) 45%, var(--deepseer-bg-2));
+}
+
+.deepseer-terminal-panel {
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.45));
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2), 0 16px 38px rgba(7, 11, 23, 0.6);
+}
+
+.deepseer-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgb(148 163 184);
+}
+
+.deepseer-round-chip {
+  position: relative;
+  min-width: 116px;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(100, 116, 139, 0.5);
+  background: rgba(2, 6, 23, 0.45);
+  padding: 0.65rem 0.75rem 0.65rem 0.85rem;
+}
+
+.deepseer-round-chip.is-active {
+  border-color: rgba(59, 130, 246, 0.72);
+  background: rgba(37, 99, 235, 0.14);
+}
+
+.deepseer-round-indicator {
+  position: absolute;
+  left: 0.25rem;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, var(--deepseer-sky), var(--deepseer-iris));
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.6);
+}
+
+.deepseer-axis-panel {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(100, 116, 139, 0.5);
+  background: rgba(2, 6, 23, 0.45);
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.deepseer-axis-track {
+  margin: 0.65rem auto;
+  height: 250px;
+  width: 12px;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, rgba(16, 185, 129, 0.95), rgba(51, 65, 85, 0.9), rgba(244, 63, 94, 0.95));
+}
+
+.deepseer-stat-card {
+  border-radius: 0.8rem;
+  border: 1px solid rgba(100, 116, 139, 0.5);
+  background: rgba(2, 6, 23, 0.46);
+  padding: 0.85rem;
+}
+
+.deepseer-action-pill {
+  background: linear-gradient(90deg, var(--deepseer-blue), var(--deepseer-iris));
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.5), 0 0 22px rgba(124, 58, 237, 0.32);
+}

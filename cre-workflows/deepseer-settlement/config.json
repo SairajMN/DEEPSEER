@@ -1,0 +1,18 @@
+{
+    "evm":  {
+                "chainSelectorName":  "ethereum-testnet-sepolia",
+                "settlementEngineAddress":  "0xc292769e14f57AbEe0A653ae4ebd09cD21652c9B",
+                "gasLimit":  "1200000"
+            },
+    "externalData":  {
+                         "priceApiUrl":  "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin\u0026vs_currencies=usd\u0026include_last_updated_at=true",
+                         "assetPath":  "bitcoin.usd",
+                         "timestampPath":  "bitcoin.last_updated_at",
+                         "priceScale":  100000000
+                     },
+    "riskApi":  {
+                    "url":  "https://risk-api.deepseer.xyz/v1/risk-score",
+                    "timeoutMs":  8000
+                }
+}
+

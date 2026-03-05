@@ -158,6 +158,8 @@ export interface ContractConfig {
   settlementEngine: string;
   governance: string;
   token: string;
+  predictionMarketFactory?: string;
+  treasury?: string;
 }
 
 export type SimpleMode = boolean;

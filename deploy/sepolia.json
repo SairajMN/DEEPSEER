@@ -1,0 +1,18 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "contracts": {
+    "treasury": "0xbE2b206Ec9a6019Cc7b3B52072bAFE2d36C640d0",
+    "settlementEngine": "0xc292769e14f57AbEe0A653ae4ebd09cD21652c9B",
+    "predictionMarketFactory": "0x17c5931aB5CE7306e141745Ce46054A643cA0522"
+  },
+  "chainlink": {
+    "dataFeeds": {
+      "ETH_USD": "0x694AA1769357215DE4FAC081bf1f309aDC325306"
+    },
+    "functionsRouter": "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0",
+    "functionsDonId": "0x66756e2d657468657265756d2d7365706f6c69612d3100000000000000000000",
+    "creForwarder": "0xF8344CFd5c43616a4366C34E3EEE75af79a74482"
+  }
+}
+

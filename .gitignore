@@ -1,0 +1,46 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+logs/
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.*.example
+contracts/.env
+backend-ai/.env
+cre-workflows/.env
+
+# Node
+node_modules/
+.next/
+dist/
+coverage/
+*.tsbuildinfo
+frontend/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.mypy_cache/
+
+# Foundry
+contracts/cache/
+contracts/out/
+contracts/lib/
+
+# CRE workflow
+cre-workflows/secrets.yaml
+cre-workflows/**/.venv/
+cre-workflows/**/node_modules/
+
+# Temporary scratch
+.tmp-cre-template/
+.tmp-chainlink-contracts/
+.tmp-*/
+chainlink-contracts-*.tgz
+.tmp-functionsclient.sol

@@ -11,8 +11,10 @@ export default function TradeLayout({ children }: { children: React.ReactNode })
   return (
     <div>
       <div className="px-4 pt-4 pb-2">
-        <h1 className="text-2xl font-bold">Trade</h1>
-        <p className="text-sm text-muted-foreground">Execute trades on prediction markets via AMM.</p>
+        <h1 className="text-2xl font-bold">Trade Terminal</h1>
+        <p className="text-sm text-muted-foreground">
+          Round-based DEEPSEER interface with realtime pricing, bull/bear strength, and on-chain execution.
+        </p>
       </div>
       <SubTabNav tabs={tradeTabs} />
       {children}
